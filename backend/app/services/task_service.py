@@ -1,14 +1,25 @@
 from sqlalchemy.orm import Session
 
+from app.repositories import agent_repository
 from app.repositories import task_repository
 from app.schemas.task import TaskCreate, TaskUpdate
 
 
 def create_task(db: Session, task_data: TaskCreate):
+    if task_data.agent_id is not None:
+        agent = agent_repository.get_agent(
+            db=db,
+            agent_id=task_data.agent_id,
+        )
+
+        if agent is None:
+            return None
+
     return task_repository.create_task(
         db=db,
         title=task_data.title,
         description=task_data.description,
+        agent_id=task_data.agent_id,
     )
 
 
@@ -36,12 +47,22 @@ def update_task(
     if task is None:
         return None
 
+    if task_data.agent_id is not None:
+        agent = agent_repository.get_agent(
+            db=db,
+            agent_id=task_data.agent_id,
+        )
+
+        if agent is None:
+            return None
+
     return task_repository.update_task(
         db=db,
         task=task,
         title=task_data.title,
         description=task_data.description,
         status=task_data.status,
+        agent_id=task_data.agent_id,
     )
 
 

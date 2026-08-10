@@ -8,10 +8,12 @@ def create_task(
     db: Session,
     title: str,
     description: str | None = None,
+    agent_id: int | None = None,
 ) -> Task:
     task = Task(
         title=title,
         description=description,
+        agent_id=agent_id,
     )
 
     db.add(task)
@@ -42,6 +44,7 @@ def update_task(
     title: str | None = None,
     description: str | None = None,
     status: str | None = None,
+    agent_id: int | None = None,
 ) -> Task:
     if title is not None:
         task.title = title
@@ -51,6 +54,9 @@ def update_task(
 
     if status is not None:
         task.status = status
+
+    if agent_id is not None:
+        task.agent_id = agent_id
 
     db.commit()
     db.refresh(task)

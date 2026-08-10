@@ -1,3 +1,4 @@
+```python
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
@@ -17,10 +18,18 @@ def create_task(
     task_data: TaskCreate,
     db: Session = Depends(get_db),
 ):
-    return task_service.create_task(
+    task = task_service.create_task(
         db=db,
         task_data=task_data,
     )
+
+    if task is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Agent not found",
+        )
+
+    return task
 
 
 @router.get(
@@ -73,7 +82,7 @@ def update_task(
     if task is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Task not found",
+            detail="Task or assigned agent not found",
         )
 
     return task
@@ -99,3 +108,4 @@ def delete_task(
         )
 
     return None
+```
