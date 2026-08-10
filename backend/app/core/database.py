@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
-from backend.app.core.config import settings
+from app.core.config import settings
 
 
 class Base(DeclarativeBase):
@@ -18,3 +18,10 @@ SessionLocal = sessionmaker(
     autoflush=False,
     bind=engine,
 )
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
