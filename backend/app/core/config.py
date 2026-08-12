@@ -8,6 +8,10 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str = ""
 
+    LLM_PROVIDER: str = "mock"
+    OPENAI_API_KEY: str = ""
+    OPENAI_MODEL: str = "gpt-5-mini"
+
     model_config = SettingsConfigDict(
         env_file="../.env",
         env_file_encoding="utf-8",

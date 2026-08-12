@@ -18,16 +18,22 @@ class ExecutionResponse(BaseModel):
     result: str | None
     started_at: datetime
     completed_at: datetime | None
+
+
 class ExecutionRunResponse(BaseModel):
     success: bool
     message: str
-    execution_id: int
+    execution_id: int | None = None
     task_id: int
-    agent_id: int
-    agent_name: str
-    agent_role: str
-    status: str
-    result: str | None
-    started_at: datetime
-    completed_at: datetime | None
+    agent_id: int | None = None
+    agent_name: str | None = None
+    agent_role: str | None = None
+    status: str | None = None
+    result: str | None = None
+    started_at: datetime | None = None
+    completed_at: datetime | None = None
 
+
+class ExecutionListResponse(BaseModel):
+    total: int
+    executions: list[ExecutionResponse]

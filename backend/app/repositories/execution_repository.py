@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models.execution import Execution
@@ -27,23 +28,34 @@ def get_execution(
     db: Session,
     execution_id: int,
 ) -> Execution | None:
-    return (
-        db.query(Execution)
-        .filter(Execution.id == execution_id)
-        .first()
+    statement = select(Execution).where(
+        Execution.id == execution_id
     )
+    return db.scalar(statement)
 
 
 def get_executions(
     db: Session,
     task_id: int | None = None,
+    status: str | None = None,
 ) -> list[Execution]:
-    query = db.query(Execution)
+    statement = select(Execution)
 
     if task_id is not None:
-        query = query.filter(Execution.task_id == task_id)
+        statement = statement.where(
+            Execution.task_id == task_id
+        )
 
-    return query.order_by(Execution.id.desc()).all()
+    if status is not None:
+        statement = statement.where(
+            Execution.status == status
+        )
+
+    statement = statement.order_by(
+        Execution.id.desc()
+    )
+
+    return list(db.scalars(statement).all())
 
 
 def update_execution(

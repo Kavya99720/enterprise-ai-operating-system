@@ -7,12 +7,14 @@ class AgentCreate(BaseModel):
     name: str
     role: str
     description: str | None = None
+    capabilities: str | None = None
 
 
 class AgentUpdate(BaseModel):
     name: str | None = None
     role: str | None = None
     description: str | None = None
+    capabilities: str | None = None
     status: str | None = None
 
 
@@ -21,6 +23,7 @@ class AgentResponse(BaseModel):
     name: str
     role: str
     description: str | None
+    capabilities: str | None
     status: str
     created_at: datetime
 

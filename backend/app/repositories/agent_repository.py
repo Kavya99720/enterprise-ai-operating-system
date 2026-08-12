@@ -9,11 +9,13 @@ def create_agent(
     name: str,
     role: str,
     description: str | None = None,
+    capabilities: str | None = None,
 ) -> Agent:
     agent = Agent(
         name=name,
         role=role,
         description=description,
+        capabilities=capabilities,
     )
 
     db.add(agent)
@@ -44,6 +46,7 @@ def update_agent(
     name: str | None = None,
     role: str | None = None,
     description: str | None = None,
+    capabilities: str | None = None,
     status: str | None = None,
 ) -> Agent:
     if name is not None:
@@ -54,6 +57,9 @@ def update_agent(
 
     if description is not None:
         agent.description = description
+
+    if capabilities is not None:
+        agent.capabilities = capabilities
 
     if status is not None:
         agent.status = status

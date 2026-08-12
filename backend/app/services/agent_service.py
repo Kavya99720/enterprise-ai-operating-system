@@ -4,24 +4,35 @@ from app.repositories import agent_repository
 from app.schemas.agent import AgentCreate, AgentUpdate
 
 
-def create_agent(db: Session, agent_data: AgentCreate):
+def create_agent(
+    db: Session,
+    agent_data: AgentCreate,
+):
     return agent_repository.create_agent(
         db=db,
         name=agent_data.name,
         role=agent_data.role,
         description=agent_data.description,
+        capabilities=agent_data.capabilities,
     )
 
 
-def get_agent(db: Session, agent_id: int):
+def get_agent(
+    db: Session,
+    agent_id: int,
+):
     return agent_repository.get_agent(
         db=db,
         agent_id=agent_id,
     )
 
 
-def get_agents(db: Session):
-    return agent_repository.get_agents(db=db)
+def get_agents(
+    db: Session,
+):
+    return agent_repository.get_agents(
+        db=db,
+    )
 
 
 def update_agent(
@@ -43,11 +54,15 @@ def update_agent(
         name=agent_data.name,
         role=agent_data.role,
         description=agent_data.description,
+        capabilities=agent_data.capabilities,
         status=agent_data.status,
     )
 
 
-def delete_agent(db: Session, agent_id: int):
+def delete_agent(
+    db: Session,
+    agent_id: int,
+):
     agent = agent_repository.get_agent(
         db=db,
         agent_id=agent_id,

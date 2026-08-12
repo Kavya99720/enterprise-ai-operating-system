@@ -33,14 +33,29 @@ def select_agent(
     if not agents:
         return None
 
-    for agent in agents:
-        role_text = f"{agent.name} {agent.role} {agent.description or ''}".lower()
+    best_agent = None
+    best_score = 0
 
-        if any(
-            keyword in task_text
-            for keyword in role_text.split()
-            if len(keyword) >= 4
-        ):
-            return agent
+    for agent in agents:
+        capabilities = (
+            agent.capabilities.split(",")
+            if agent.capabilities
+            else []
+        )
+
+        score = 0
+
+        for capability in capabilities:
+            capability = capability.strip().lower()
+
+            if capability and capability in task_text:
+                score += 1
+
+        if score > best_score:
+            best_score = score
+            best_agent = agent
+
+    if best_agent is not None:
+        return best_agent
 
     return agents[0]
