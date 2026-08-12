@@ -1,19 +1,11 @@
 from app.agents.providers.base import LLMProvider
-from app.agents.providers.mock import MockLLMProvider
-from app.core.config import settings
+from app.agents.providers.factory import get_llm_provider
 from app.models.agent import Agent
 from app.models.task import Task
 
 
 def get_provider() -> LLMProvider:
-    provider_name = settings.LLM_PROVIDER.lower()
-
-    if provider_name == "mock":
-        return MockLLMProvider()
-
-    raise ValueError(
-        f"Unsupported LLM provider: {settings.LLM_PROVIDER}"
-    )
+    return get_llm_provider()
 
 
 def run_agent(

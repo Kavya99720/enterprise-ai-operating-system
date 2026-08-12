@@ -9,8 +9,12 @@ class Settings(BaseSettings):
     DATABASE_URL: str = ""
 
     LLM_PROVIDER: str = "mock"
+
     OPENAI_API_KEY: str = ""
     OPENAI_MODEL: str = "gpt-5-mini"
+
+    GROQ_API_KEY: str = ""
+    GROQ_MODEL: str = "llama-3.3-70b-versatile"
 
     model_config = SettingsConfigDict(
         env_file="../.env",
