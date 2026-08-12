@@ -7,6 +7,7 @@ from alembic import context
 from app.core.database import Base
 from app.models.task import Task
 from app.models.agent import Agent
+from app.models.execution import Execution
 from app.core.config import settings
 
 
@@ -14,6 +15,7 @@ config = context.config
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
+
 
 target_metadata = Base.metadata
 
