@@ -13,3 +13,6 @@ __pycache__/
 
 # System files
 .DS_Store
+# Uploaded document storage
+backend/storage/documents/*
+!backend/storage/documents/.gitkeep
